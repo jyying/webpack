@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: {
-    app: './src/index.js'
+    app: './src/app.js'
   },
   output: {
     filename: '[name].bundle.js',
@@ -16,11 +16,16 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.css$/,
+        test: /\.css$/,
         use: [
           "style-loader",
           "css-loader"
         ]
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader"
       }
     ]
   },
@@ -29,7 +34,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: '测试'
+      title: '测试',
+      // template: './views/app/index.html'
     })
   ],
   optimization: {
