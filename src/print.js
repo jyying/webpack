@@ -1,3 +1,3 @@
 export default function printMe(){
-  console.log('打印一下2221')
+  console.log('sdsd2323')
 }
