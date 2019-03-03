@@ -17,15 +17,33 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
+        exclude: /node_modules/,
         use: [
           "style-loader",
-          "css-loader"
+          "css-loader",
+          "postcss-loader"
+        ]
+      },
+      {
+        test: /\.less$/,
+        use: [
+          "style-loader",
+          "css-loader",
+          "postcss-loader",
+          {
+            loader: "less-loader",
+            options: {
+              javascriptEnabled: true
+            }
+          }
         ]
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "babel-loader"
+        use: [
+          "babel-loader"
+        ]
       }
     ]
   },
@@ -35,7 +53,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: '测试',
-      // template: './views/app/index.html'
+      template: './views/app/index.html'
     })
   ],
   optimization: {
