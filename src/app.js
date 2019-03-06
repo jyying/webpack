@@ -1,9 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import dva from 'dva'
 
-import App from './index'
+import appRouter from '../router'
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-)
+const app = dva()
+
+app.router(appRouter)
+
+app.start('#root')

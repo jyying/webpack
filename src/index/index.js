@@ -10,6 +10,14 @@ export default class App extends Component {
 
   state = {
     collapsed: false,
+
+    nav: [
+      {
+        title: "自动生成json模板",
+        path: "",
+        icon: true
+      }
+    ]
   }
 
   toggle = () => {
@@ -19,6 +27,9 @@ export default class App extends Component {
   }
 
   render() {
+    const { nav } = this.state
+    const { children } = this.props
+    console.log(this.props)
     return (
       <Layout id="components-layout-demo-custom-trigger">
         <Sider
@@ -28,18 +39,14 @@ export default class App extends Component {
         >
           <div className="logo" />
           <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-            <Menu.Item key="1">
-              <Icon type="user" />
-              <span>nav 1</span>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="video-camera" />
-              <span>nav 2</span>
-            </Menu.Item>
-            <Menu.Item key="3">
-              <Icon type="upload" />
-              <span>nav 3</span>
-            </Menu.Item>
+            {
+              nav.map((item, index) =>
+                <Menu.Item key={index}>
+                  <Icon type="user" />
+                  <span>{item.title}</span>
+                </Menu.Item>
+              )
+            }
           </Menu>
         </Sider>
         <Layout>
@@ -54,7 +61,7 @@ export default class App extends Component {
             margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280,
           }}
           >
-            Content
+            {children}
           </Content>
         </Layout>
       </Layout>
