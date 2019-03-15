@@ -6,7 +6,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 
 const app = express()
-const config = require('./webpack.common.js')
+const config = require('./webpack.dev.js')
 const compiler = webpack(config)
 // 编译之前打印
 compiler.plugin('compile', (compilation, callback) => {
@@ -25,9 +25,8 @@ app.use(webpackDevMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler))
 
 function getPage(page, req, res, next) {
-
   const filename = path.join(compiler.outputPath, page) + '.html'
-
+  console.log(compiler.outputPath, page, filename)
   compiler.outputFileSystem.readFile(filename, (err, result) => {
     if (err) {
       return (next(err))
@@ -38,7 +37,8 @@ function getPage(page, req, res, next) {
   })
 }
 
-app.get('/', getPage.bind(null, 'index'))
+// app.get('/', getPage.bind(null, 'index'))
+app.get('/' + '*', getPage.bind(null, 'index'))
 
 app.listen(8081, function () {
   console.log('已经启动8081端口')

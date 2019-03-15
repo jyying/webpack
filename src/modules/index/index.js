@@ -1,23 +1,19 @@
 import React, { Component } from 'react'
+import { connect } from 'dva'
+import { Link, withRouter } from 'dva/router'
 
 import { Layout, Menu, Icon } from 'antd'
+
+import menu from 'config/menu.js'
 
 import './index.less'
 
 const { Header, Sider, Content } = Layout
 
-export default class App extends Component {
+class App extends Component {
 
   state = {
     collapsed: false,
-
-    nav: [
-      {
-        title: "自动生成json模板",
-        path: "",
-        icon: true
-      }
-    ]
   }
 
   toggle = () => {
@@ -27,9 +23,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { nav } = this.state
     const { children } = this.props
-    console.log(this.props)
     return (
       <Layout id="components-layout-demo-custom-trigger">
         <Sider
@@ -38,12 +32,14 @@ export default class App extends Component {
           collapsed={this.state.collapsed}
         >
           <div className="logo" />
-          <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+          <Menu theme="dark" mode="inline">
             {
-              nav.map((item, index) =>
+              menu.map((item, index) =>
                 <Menu.Item key={index}>
-                  <Icon type="user" />
-                  <span>{item.title}</span>
+                  <Link to={item.path}>
+                    <Icon type="user" />
+                    <span>{item.title}</span>
+                  </Link>
                 </Menu.Item>
               )
             }
@@ -67,4 +63,12 @@ export default class App extends Component {
       </Layout>
     )
   }
+
+  goPage = (data) => {
+    console.log(data)
+  }
 }
+
+export default withRouter(connect((state) => ({
+  app: state.app,
+}))(App))

@@ -1,18 +1,26 @@
 const path = require('path')
-
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
 module.exports = {
   entry: {
-    app: './src/app.js'
+    app: './src/modules/app.js'
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.join(__dirname, 'dist'),
     chunkFilename: '[name].bundle.js',
     publicPath: '/'
   },
   mode: 'none',
+  resolve: {
+    alias: {
+      config: path.resolve(__dirname, './src/config'), // 前端配置
+    }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/views/app.html'
+    }),
+  ],
   module: {
     rules: [
       {
@@ -50,12 +58,6 @@ module.exports = {
   devServer: {
     port: 3000,
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: '测试',
-      template: './views/app/index.html'
-    })
-  ],
   optimization: {
     splitChunks: {
       name: 'common'
