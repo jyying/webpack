@@ -1,6 +1,8 @@
 const path = require('path')
 const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 const production = process.env.NODE_ENV === 'production'
 const extWebpackConfig = production ? require('./webpack.prod') : require('./webpack.dev')
 
@@ -17,12 +19,14 @@ const _webpack = {
   resolve: {
     alias: {
       config: path.resolve(__dirname, './src/config'), // 前端配置
+      '@ant-design/icons/lib/dist$': path.resolve(__dirname, './src/config/icons.js')
     }
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/views/app.html'
-    })
+    }),
+    // new BundleAnalyzerPlugin()
   ],
   module: {
     rules: [

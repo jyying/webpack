@@ -6,7 +6,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 
 const app = express()
-const config = require('./webpack.common')
+const config = require('../webpack.common')
 const compiler = webpack(config)
 // 编译之前打印
 compiler.plugin('compile', (compilation, callback) => {
