@@ -1,5 +1,9 @@
-const merge = require('webpack-merge')
-const common = require('./webpack.common.js')
-module.exports = merge(common, {
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
+module.exports = {
   devtool: 'inline-source-map',
-});
+  mode:'development',
+  plugins: [
+    new BundleAnalyzerPlugin()
+  ],
+}

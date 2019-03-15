@@ -1,6 +1,10 @@
 const path = require('path')
+const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-module.exports = {
+const production = process.env.NODE_ENV === 'production'
+const extWebpackConfig = production ? require('./webpack.prod') : require('./webpack.dev')
+
+const _webpack = {
   entry: {
     app: './src/modules/app.js'
   },
@@ -10,7 +14,6 @@ module.exports = {
     chunkFilename: '[name].bundle.js',
     publicPath: '/'
   },
-  mode: 'none',
   resolve: {
     alias: {
       config: path.resolve(__dirname, './src/config'), // 前端配置
@@ -19,13 +22,12 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/views/app.html'
-    }),
+    })
   ],
   module: {
     rules: [
       {
         test: /\.css$/,
-        exclude: /node_modules/,
         use: [
           "style-loader",
           "css-loader",
@@ -34,6 +36,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
+        exclude: /node_modules/,
         use: [
           "style-loader",
           "css-loader",
@@ -63,4 +66,5 @@ module.exports = {
       name: 'common'
     }
   }
-};
+}
+module.exports = merge(_webpack, extWebpackConfig)
